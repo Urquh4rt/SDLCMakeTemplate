@@ -17,11 +17,14 @@ int main(int argc, char* argv[])
 {
 	SDL_Init(SDL_INIT_VIDEO);
 	int imgFlags = IMG_INIT_PNG;
-	IMG_Init(imgFlags);
+    if (!(IMG_Init(imgFlags) & imgFlags)) {
+        printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+    }
     SDL_CreateWindowAndRenderer(512, 512, 0, &window, &renderer);
     //surface = SDL_CreateRGBSurface(0, 512, 512, 32, 0, 0, 0, 0);
-    surface = IMG_Load("map.png");
+    surface = IMG_Load("assets/map.png");
     if (surface == NULL) {
+        printf("Unable to load image %s! SDL_image Error: %s\n", "assets/map.png", IMG_GetError());
         surface = SDL_CreateRGBSurface(0, 512, 512, 32, 0, 0, 0, 0);
         Uint8* pixels = (Uint8*) surface->pixels;
         for (int i = 0; i < 1048576; i++) {
