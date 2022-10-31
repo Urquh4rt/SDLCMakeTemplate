@@ -13,9 +13,12 @@ else()
     find_package(SDL2 REQUIRED)
 endif()
 
-include_directories(${SDL2_INCLUDE_DIRS})
+
 
 add_executable(SDL2Test Main.cpp)
+target_include_directories(SDL2Test PRIVATE ${SDL2_INCLUDE_DIRS})
+
+add_subdirectory("src")
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
 	target_link_libraries(SDL2Test)
